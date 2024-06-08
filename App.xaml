@@ -1,0 +1,26 @@
+﻿<Application x:Class="protocolPlus.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:protocolPlus"
+             xmlns:viewModel="clr-namespace:protocolPlus.MVVM.ViewModel"
+             xmlns:view="clr-namespace:protocolPlus.MVVM.View"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./Theme/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/TextBoxTheme.xaml"/>
+                <ResourceDictionary Source="./Theme/ProtocolCard.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModel:ProtocolViewModel}">
+                <view:ProtocolView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:DiscoveryViewModel}">
+                <view:DiscoveryView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
