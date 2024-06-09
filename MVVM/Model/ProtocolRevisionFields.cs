@@ -87,7 +87,15 @@ namespace protocolPlus.MVVM.Model
         public string MachineRotatio { get; set; }
         public string MachineRotatioTag { get; } = "<machine.rotation>";
     }
-    class ProtocolRevisionFields
+
+    class ProtocolRevisionGroups
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<ProtocolRevisionFields> GropupFields { get; set; }
+    }
+
+    public class ProtocolRevisionFields
     {
         public int ProtocolRevisionId { get; set; }
         public string ProtocolFieldQuestion { get; set; }
