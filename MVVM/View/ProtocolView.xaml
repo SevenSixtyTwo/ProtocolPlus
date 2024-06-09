@@ -284,11 +284,12 @@
                                 <DataGridTextColumn.HeaderStyle>
                                     <Style TargetType="DataGridColumnHeader">
                                         <Setter Property="Background"
-                    Value="#8a7df5"/>
+                                                Value="#8a7df5"/>
+                                        
                                         <Setter Property="BorderThickness"
-                    Value="1"/>
+                                                Value="1"/>
                                         <Setter Property="BorderBrush"
-                    Value="Black"/>
+                                                Value="Black"/>
                                     </Style>
                                 </DataGridTextColumn.HeaderStyle>
                                 <DataGridTextColumn.CellStyle>
@@ -427,32 +428,40 @@
                 </Grid>
 
                 <DockPanel Grid.Row="2">
-                    <ItemsControl ItemsSource="{Binding ProtocolFields}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0 6">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
+                    <ItemsControl ItemsSource="{Binding ProtocolGroups}">
 
-                                    <Label Content="{Binding ProtocolFieldQuestion}"
-                                               Foreground="Black"
-                                               Background="#9591b8"  
-                                               Grid.Row="0"/>
+                        <Label Content="{Binding ProtocolGroups.Name}"
+                               Foreground="Black"
+                               Background="#9591b8"  
+                               Grid.Row="0"/>
 
-                                    <TextBox BorderThickness="0"
-                                                 Background="#cbc7ed"
-                                                 Padding="5"
-                                                 Foreground="Black"
-                                                 Grid.Row="1"
-                                                 Text="{Binding ProtocolFieldAnswer, 
-                                                       Mode=TwoWay, 
-                                                       UpdateSourceTrigger=PropertyChanged}">
-                                    </TextBox>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        <ItemsControl ItemsSource="{Binding ProtocolGroups.FieldsInGroup}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0 6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="30"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Content="{Binding ProtocolFieldQuestion}"
+                                                    Foreground="Black"
+                                                    Background="#9591b8"  
+                                                    Grid.Row="0"/>
+
+                                        <TextBox BorderThickness="0"
+                                                        Background="#cbc7ed"
+                                                        Padding="5"
+                                                        Foreground="Black"
+                                                        Grid.Row="1"
+                                                        Text="{Binding ProtocolFieldAnswer, 
+                                                            Mode=TwoWay, 
+                                                            UpdateSourceTrigger=PropertyChanged}">
+                                        </TextBox>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </ItemsControl>
                 </DockPanel>
 

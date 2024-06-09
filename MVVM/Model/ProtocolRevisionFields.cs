@@ -92,12 +92,13 @@ namespace protocolPlus.MVVM.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<ProtocolRevisionFields> GropupFields { get; set; }
+        public List<ProtocolRevisionFields> FieldsInGroup { get; set; }
     }
 
     public class ProtocolRevisionFields
     {
-        public int ProtocolRevisionId { get; set; }
+        public int ResultId { get; set; }
+        public int GroupId { get; set; }
         public string ProtocolFieldQuestion { get; set; }
         public string ProtocolFieldAnswer { get; set; }
         public string ProtocolFieldTag { get; set; }

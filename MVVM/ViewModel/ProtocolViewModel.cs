@@ -8,11 +8,13 @@ using System.ComponentModel;
 
 using static protocolPlus.Core.DatabaseUtils;
 using static WordUtils;
+using System.Data;
 
 namespace protocolPlus.MVVM.ViewModel
 {
     class ProtocolViewModel : ObservableObject
     {
+        public ObservableCollection<ProtocolRevisionGroups> ProtocolGroups { get; set; }
         public ObservableCollection<Tool> Tools { get; set; } 
         public ObservableCollection<Tool> AvailableTools { get; set; } 
         public ObservableCollection<DropDownItem> DropDownListItems { get; set; }
@@ -130,6 +132,7 @@ namespace protocolPlus.MVVM.ViewModel
 
             ProtocolFields = [];
             ResultFields = [];
+            ProtocolGroups = [];
 
             DropDownListItems = [];
             DataGridItems = [];
@@ -190,10 +193,21 @@ namespace protocolPlus.MVVM.ViewModel
                 machineId++;
             }
 
+            var cmdGroup = dbConnection.CreateCommand();
+            cmdGroup.CommandText = "SELECT revisionResult_id, name, tag, is_checked, units, revisionGroup_id FROM revisionCell";
+
+            var readerGroup = cmdGroup.ExecuteReader();
+            while (readerGroup.Read())
+            { 
+
+            }
+            readerGroup.Close();
+            cmdGroup.Reset();
+
             int tmpId = 0;
 
             var cmd = dbConnection.CreateCommand();
-            cmd.CommandText = "SELECT revisionResult_id, name, tag, is_checked, units FROM revisionCell";
+            cmd.CommandText = "SELECT revisionResult_id, name, tag, is_checked, units, revisionGroup_id FROM revisionCell";
 
             string format1 = "{0}, ({1})";
             string format2 = "{0}";
@@ -213,11 +227,12 @@ namespace protocolPlus.MVVM.ViewModel
 
                 ProtocolFields.Add(new ProtocolRevisionFields
                 {
-                    ProtocolRevisionId = tmpId,
+                    ResultId = tmpId,
                     ProtocolFieldQuestion = String.Format(frmt, reader.GetString(1), reader.GetString(4)),
                     ProtocolFieldTag = reader.GetString(2),
                     IsChecked = reader.GetInt32(3),
-                    ProtocolFieldAnswer = "0"
+                    ProtocolFieldAnswer = "0",
+                    GroupId = reader.GetInt32(5)
                 });
             }
             reader.Close();
@@ -269,10 +284,10 @@ namespace protocolPlus.MVVM.ViewModel
                 {
                     tagsAndValues.Add(field.ProtocolFieldTag, field.ProtocolFieldAnswer);
 
-                    if (field.ProtocolRevisionId != 0)
+                    if (field.ResultId != 0)
                     {
                         double answer = Convert.ToDouble(field.ProtocolFieldAnswer);
-                        int tmpID = field.ProtocolRevisionId;
+                        int tmpID = field.ResultId;
 
                         ResultFields[tmpID].InputValues.Add(answer);
                     }
