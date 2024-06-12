@@ -427,17 +427,62 @@
                     <Button Grid.Row="1" Grid.Column="2" Command="{Binding DeleteToolCommand}" Content="Удалить инструмент"/>
                 </Grid>
 
-                <DockPanel Grid.Row="2">
+                <DockPanel Grid.Row="2"
+                           Margin="0 5 0 5">
+                    <ItemsControl ItemsSource="{Binding ProtocolGroups}"
+                             Margin="0 5 0 5"
+                             Background="Transparent">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" Margin="0 5 0 0">
+                                    <TextBlock Text="{Binding Name}"
+                                               Foreground="Black"
+                                               FontSize="16"
+                                               Background="#9591b8"/>
+                                    <ItemsControl ItemsSource="{Binding FieldsInGroup}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0 6">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="30"/>
+                                                        <RowDefinition Height="30"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Label Content="{Binding ProtocolFieldQuestion}"
+                                                           Foreground="Black"
+                                                           Background="#4b4678"  
+                                                           Grid.Row="0"/>
+
+                                                    <TextBox BorderThickness="0"
+                                                             Background="#cbc7ed"
+                                                             Padding="5"
+                                                             Foreground="Black"
+                                                             Grid.Row="1"
+                                                             Text="{Binding ProtocolFieldAnswer, 
+                                                                    Mode=TwoWay, 
+                                                                    UpdateSourceTrigger=PropertyChanged}">
+                                                    </TextBox>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DockPanel>
+
+                <!--<DockPanel Grid.Row="2">
                     <ItemsControl ItemsSource="{Binding ProtocolGroups}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
 
-                        <Label Content="{Binding ProtocolGroups.Name}"
-                               Foreground="Black"
-                               Background="#9591b8"  
-                               Grid.Row="0"/>
+                                <Label Content="{Binding Name}"
+                                       Foreground="Black"
+                                       Background="#9591b8"  
+                                       Grid.Row="0"/>       
 
-                        <ItemsControl ItemsSource="{Binding ProtocolGroups.FieldsInGroup}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                        --><!--<ItemsControl ItemsSource="{Binding FieldsInGroup}">--><!--
                                     <Grid Margin="0 6">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30"/>
@@ -459,11 +504,11 @@
                                                             UpdateSourceTrigger=PropertyChanged}">
                                         </TextBox>
                                     </Grid>
+                        --><!--</ItemsControl>--><!--
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ItemsControl>
                     </ItemsControl>
-                </DockPanel>
+                </DockPanel>-->
 
 
             </Grid> 

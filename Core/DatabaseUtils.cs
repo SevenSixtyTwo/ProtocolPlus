@@ -204,8 +204,6 @@ namespace protocolPlus.Core
                    ('Измерение вибрации подшипниковых опор'), 
                    ('Проверка заложенных термопреобразователей сопротивления');
 
-
-
                 INSERT into revisionResult (
                   tag, 
                   permissible_value,

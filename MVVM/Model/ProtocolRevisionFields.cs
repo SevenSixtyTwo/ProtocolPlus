@@ -92,7 +92,7 @@ namespace protocolPlus.MVVM.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<ProtocolRevisionFields> FieldsInGroup { get; set; }
+        public ObservableCollection<ProtocolRevisionFields> FieldsInGroup { get; set; }
     }
 
     public class ProtocolRevisionFields

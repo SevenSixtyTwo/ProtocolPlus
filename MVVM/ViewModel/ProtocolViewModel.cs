@@ -194,49 +194,99 @@ namespace protocolPlus.MVVM.ViewModel
             }
 
             var cmdGroup = dbConnection.CreateCommand();
-            cmdGroup.CommandText = "SELECT revisionResult_id, name, tag, is_checked, units, revisionGroup_id FROM revisionCell";
+            cmdGroup.CommandText = "SELECT revisionGroup.id, " +
+                "revisionGroup.name, " +
+                "revisionCell.revisionResult_id, " +
+                "revisionCell.name, " +
+                "revisionCell.tag, " +
+                "revisionCell.is_checked, " +
+                "revisionCell.units, " +
+                "revisionCell.id " +
+                "FROM revisionGroup JOIN revisionCell ON revisionCell.revisionGroup_id = revisionGroup.id";
 
-            var readerGroup = cmdGroup.ExecuteReader();
-            while (readerGroup.Read())
-            { 
-
-            }
-            readerGroup.Close();
-            cmdGroup.Reset();
-
+            int grpIdCheck = -1;
             int tmpId = 0;
-
-            var cmd = dbConnection.CreateCommand();
-            cmd.CommandText = "SELECT revisionResult_id, name, tag, is_checked, units, revisionGroup_id FROM revisionCell";
+            int fieldId = 0;
 
             string format1 = "{0}, ({1})";
             string format2 = "{0}";
 
             string frmt;
 
-            var reader = cmd.ExecuteReader();
-            while (reader.Read())
+            var readerGroup = cmdGroup.ExecuteReader();
+            while (readerGroup.Read())
             {
                 tmpId = 0;
-                if (!reader.IsDBNull(0))
-                    tmpId = reader.GetInt32(0);
+                if (!readerGroup.IsDBNull(2))
+                    tmpId = readerGroup.GetInt32(2);
 
                 frmt = format1;
-                if (reader.GetString(4) == "0")
+                if (readerGroup.GetString(6) == "0")
                     frmt = format2;
 
-                ProtocolFields.Add(new ProtocolRevisionFields
+                int grpId = readerGroup.GetInt32(0)-1;
+
+                if (grpIdCheck != grpId)
+                {
+                    grpIdCheck = grpId;
+                    fieldId = 0;
+
+                    ProtocolGroups.Add(new ProtocolRevisionGroups
+                    {
+                        Name = readerGroup.GetString(1),
+                        FieldsInGroup = []
+                    });
+                }
+
+                ProtocolGroups[grpId].FieldsInGroup.Add(new ProtocolRevisionFields
                 {
                     ResultId = tmpId,
-                    ProtocolFieldQuestion = String.Format(frmt, reader.GetString(1), reader.GetString(4)),
-                    ProtocolFieldTag = reader.GetString(2),
-                    IsChecked = reader.GetInt32(3),
+                    ProtocolFieldQuestion = String.Format(frmt, readerGroup.GetString(3), readerGroup.GetString(6)),
+                    ProtocolFieldTag = readerGroup.GetString(4),
+                    IsChecked = readerGroup.GetInt32(5),
                     ProtocolFieldAnswer = "0",
-                    GroupId = reader.GetInt32(5)
+                    GroupId = grpId
                 });
+
+                ProtocolFields.Add(ProtocolGroups[grpId].FieldsInGroup[fieldId]);
+
             }
-            reader.Close();
-            cmd.Reset();
+            readerGroup.Close();
+            cmdGroup.Reset();
+
+            //int tmpId = 0;
+
+            //var cmd = dbConnection.CreateCommand();
+            //cmd.CommandText = "SELECT revisionResult_id, name, tag, is_checked, units, revisionGroup_id FROM revisionCell";
+
+            //string format1 = "{0}, ({1})";
+            //string format2 = "{0}";
+
+            //string frmt;
+
+            //var reader = cmd.ExecuteReader();
+            //while (reader.Read())
+            //{
+            //    tmpId = 0;
+            //    if (!reader.IsDBNull(0))
+            //        tmpId = reader.GetInt32(0);
+
+            //    frmt = format1;
+            //    if (reader.GetString(4) == "0")
+            //        frmt = format2;
+
+            //    ProtocolFields.Add(new ProtocolRevisionFields
+            //    {
+            //        ResultId = tmpId,
+            //        ProtocolFieldQuestion = String.Format(frmt, reader.GetString(1), reader.GetString(4)),
+            //        ProtocolFieldTag = reader.GetString(2),
+            //        IsChecked = reader.GetInt32(3),
+            //        ProtocolFieldAnswer = "0",
+            //        GroupId = reader.GetInt32(5)
+            //    });
+            //}
+            //reader.Close();
+            //cmd.Reset();
             
             var cmd2 = dbConnection.CreateCommand();
             cmd2.CommandText = "SELECT id, tag, permissible_value, check_type FROM revisionResult";
@@ -280,16 +330,19 @@ namespace protocolPlus.MVVM.ViewModel
 
                 var newFullPathFile = CreateNewDocumentFromTemplate(templateFilePath, newFilePath, newFileName);
 
-                foreach (var field in ProtocolFields)
+                foreach (var group in ProtocolGroups)
                 {
-                    tagsAndValues.Add(field.ProtocolFieldTag, field.ProtocolFieldAnswer);
-
-                    if (field.ResultId != 0)
+                    foreach (var field in group.FieldsInGroup)
                     {
-                        double answer = Convert.ToDouble(field.ProtocolFieldAnswer);
-                        int tmpID = field.ResultId;
+                        tagsAndValues.Add(field.ProtocolFieldTag, field.ProtocolFieldAnswer);
 
-                        ResultFields[tmpID].InputValues.Add(answer);
+                        if (field.ResultId != 0)
+                        {
+                            double answer = Convert.ToDouble(field.ProtocolFieldAnswer);
+                            int tmpID = field.ResultId;
+
+                            ResultFields[tmpID].InputValues.Add(answer);
+                        }
                     }
                 }
 
