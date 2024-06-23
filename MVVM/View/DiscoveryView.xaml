@@ -5,9 +5,204 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:protocolPlus.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="#1B1B1B">
+             d:DesignHeight="460" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <RadioButton Content="инструменты"
+                     Height="50"
+                     Foreground="White"
+                     FontSize="14"
+                     Style="{StaticResource MenuButtonTheme}"
+                     IsChecked="True"/>
+        <RadioButton Content="электродвигатели"
+                     Grid.Column="1"
+                     Height="50"
+                     Foreground="White"
+                     FontSize="14"
+                     Style="{StaticResource MenuButtonTheme}"/>
+        <RadioButton Content="протоколы"
+                     Grid.Column="2"
+                     Height="50"
+                     Foreground="White"
+                     FontSize="14"
+                     Style="{StaticResource MenuButtonTheme}"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="4">
             
+            <Grid Grid.Row="1" Margin="0 0 0 8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" 
+              ItemsSource="{Binding AvailableTools}" AutoGenerateColumns="False" >
+
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="наименование" Binding="{Binding Name}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background"
+                                Value="#8a7df5"/>
+                                    <Setter Property="BorderThickness"
+                                Value="1"/>
+                                    <Setter Property="BorderBrush"
+                                Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" 
+                                Value="#cbc7ed" />
+                                    <Setter Property="BorderThickness"
+                                Value="1"/>
+                                    <Setter Property="BorderBrush"
+                                Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background"
+                                Value="#8a7df5"/>
+
+                                    <Setter Property="BorderThickness"
+                                Value="1"/>
+                                    <Setter Property="BorderBrush"
+                                Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" 
+    Value="#cbc7ed" />
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Зав. №" Binding="{Binding AssurancNum}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background"
+    Value="#8a7df5"/>
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" 
+    Value="#cbc7ed" />
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="№ Свидетельства о поверке (Аттестата)" Binding="{Binding VerificationNum}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background"
+    Value="#8a7df5"/>
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" 
+    Value="#cbc7ed" />
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Дата поверки" Binding="{Binding VerificationDate}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background"
+    Value="#8a7df5"/>
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" 
+    Value="#cbc7ed" />
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Годен/ не годен" Binding="{Binding Ready, Mode=OneWay}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background"
+    Value="#8a7df5"/>
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" 
+    Value="#cbc7ed" />
+                                    <Setter Property="BorderThickness"
+    Value="1"/>
+                                    <Setter Property="BorderBrush"
+    Value="Black"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+                <Button Grid.Row="1" Command="{Binding AddToolCommand}" Content="Добавить инструмент"/>
+
+                <Button Grid.Row="1" Grid.Column="2" Command="{Binding DeleteToolCommand}" Content="Удалить инструмент"/>
+            </Grid>
+        </ScrollViewer>
+        <DockPanel Grid.Row="2"
+                   Grid.ColumnSpan="4">
+            <Button Content="СОХРАНИТЬ"/>
+        </DockPanel>
     </Grid>
 </UserControl>
